@@ -15,8 +15,8 @@ function Navbar() {
           <img
             src={logoImage}
             alt=""
-            width="80"
-            height="80"
+            width="75"
+            height="75"
             class="d-inline-block align-text-center"
           />
           <span>BooksWay</span>

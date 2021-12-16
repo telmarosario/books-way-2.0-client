@@ -58,10 +58,10 @@ function ProfilePage() {
             </div>
 
             {/* Second column */}
-            <div className="col-sm-8 col-md-7 mt-5">
+            <div className="col-sm-8 col-md-7 mt-5 text-wrap">
               <h4 className="custom-user-info">{userInfo.username}</h4>
               <p className="custom-p-tag ">
-                You can contact me via: <b>{userInfo.email}</b>
+                Email: <b>{userInfo.email}</b>
               </p>
               <p className="custom-p-tag "> Favorite Book Genres:</p>
               {userInfo.favoriteGenres.map((genre) => {

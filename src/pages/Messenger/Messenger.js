@@ -71,7 +71,7 @@ function Messenger() {
   }, [messages]);
 
   return (
-    <div className="container">
+    <div className="container min-vh-100">
       <div className="row">
         <div className="col-sm-12 col-md-3">
           <div className="chatmenu mt-5">
@@ -129,7 +129,9 @@ function Messenger() {
                   </div>
                 </div>
               ) : (
-                <span>Open a conversation</span>
+                <span className="custom-open-messenger mt-5">
+                  Open a conversation
+                </span>
               )}
             </div>
           </div>

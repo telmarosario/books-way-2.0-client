@@ -1,4 +1,10 @@
 .conversation:hover {
-  background-color: grey;
+  background-color: #ffc14f8a;
   cursor: pointer;
+  height: 2rem;
+}
+
+.custom-conversation-img {
+  height: 1.5rem;
+  border-radius: 100%;
 }

@@ -7,7 +7,7 @@
 
 .chat-message-input {
   width: 80%;
-  height: 14rem;
+  height: 10vh;
   padding: 1em;
 }
 
@@ -17,12 +17,14 @@
 }
 
 .chatbox-top {
-  height: 40rem;
+  height: 70vh;
   overflow-y: scroll;
   padding-right: 1rem;
 }
 
 .chat-submit-button {
+  background-color: #453d83;
+  color: white;
   width: 5rem;
   height: 2rem;
   border: none;
@@ -31,4 +33,9 @@
 
 .chatmenu-wrapper {
   text-align: left;
+}
+
+.custom-open-messenger {
+  font-size: 2em;
+  color: rgba(0, 0, 0, 0.521);
 }

@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
 import { useEffect, useState } from "react";
 import "./Conversation.css";
 import userService from "../../services/user.service";
@@ -25,7 +27,16 @@ function Conversation({ conversation, currentUser }) {
   return (
     <div className="conversation mb-3">
       {errorMessage && <p>{errorMessage}</p>}
-      {user && <span className="conversation-name">{user.username}</span>}
+      {user && (
+        <div>
+          <img
+            src={user.imageUrl}
+            alt="user"
+            className="custom-conversation-img me-2"
+          />
+          <span className="conversation-name">{user.username}</span>
+        </div>
+      )}
     </div>
   );
 }

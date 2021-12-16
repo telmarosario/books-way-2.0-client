@@ -53,7 +53,7 @@ function OtherUser() {
         <div className="container mt-5">
           <div className="row">
             {/* First Column */}
-            <div className="col-sm-3 col-md-3 d-flex justify-content-end row">
+            <div className="col-sm-11 col-md-3 d-flex justify-content-end row">
               <img
                 src={otherUser.imageUrl}
                 alt="profile"
@@ -62,13 +62,13 @@ function OtherUser() {
             </div>
 
             {/* Second column */}
-            <div className="col-sm-8 col-md-7 mt-5">
+            <div className="col-sm-11 col-md-7 mt-5">
               <h4 className="custom-user-info-ou">{otherUser.username}</h4>
-              <button className="button-21-ou" onClick={createConversation}>
+              <button className="button-17 mt-2" onClick={createConversation}>
                 Message
               </button>
-              <p className="custom-p-tag-ou">
-                You can contact me via: <b>{otherUser.email}</b>
+              <p className="custom-p-tag-ou mt-3">
+                Email: <b>{otherUser.email}</b>
               </p>
               <p className="custom-p-tag-ou">Favorite Book Genres:</p>
               {otherUser.favoriteGenres.map((genre) => {
