@@ -5,6 +5,7 @@ import { AuthContext } from "../../context/auth.context";
 import genres from "../../genres";
 import fileService from "../../services/fileupload.service";
 import userService from "../../services/user.service";
+import ErrorCard from "./../../components/ErrorCard/ErrorCard";
 
 function EditProfilePage() {
   const [username, setUsername] = useState("");
@@ -140,7 +141,7 @@ function EditProfilePage() {
             <div className="col-3"></div>
           </div>
         </div>
-        {errorMessage && <p className="error-message">{errorMessage}</p>}
+        {errorMessage && <ErrorCard errorMessage={errorMessage} />}
       </form>
     </div>
   );

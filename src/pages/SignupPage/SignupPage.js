@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import genres from "../../genres";
 import "./SignupPage.css";
+import ErrorCard from "./../../components/ErrorCard/ErrorCard";
 
 import authService from "../../services/auth.service";
 import fileService from "../../services/fileupload.service";
@@ -152,7 +153,7 @@ function SignupPage() {
         </div>
       </form>
 
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
+      {errorMessage && <ErrorCard errorMessage={errorMessage} />}
 
       <p className="mb-5">
         Already have account? <Link to={"/login"}> Login</Link>

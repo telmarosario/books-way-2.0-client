@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/auth.context";
+import ErrorCard from "./../../components/ErrorCard/ErrorCard";
 import "./LoginPage.css";
 
 import authService from "../../services/auth.service";
@@ -68,13 +69,12 @@ function LoginPage() {
                 >
                   Login
                 </button>
+                {errorMessage && <ErrorCard errorMessage={errorMessage} />}
               </div>
             </div>
           </div>
         </div>
       </form>
-
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
 
       <p>Don't have an account yet?</p>
       <Link to={"/signup"}> Sign Up</Link>

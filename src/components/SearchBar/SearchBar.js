@@ -11,7 +11,7 @@ function SearchBar({ searchFilter }) {
 
   return (
     <input
-      class="form-control w-50 me-4"
+      className="form-control w-50 me-4"
       type="text"
       placeholder="Search for a book"
       onChange={handleSearchInput}

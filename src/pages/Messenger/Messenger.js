@@ -5,6 +5,7 @@ import "./Messenger.css";
 import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../context/auth.context";
 import chatService from "../../services/chat.service";
+import ErrorCard from "./../../components/ErrorCard/ErrorCard";
 
 function Messenger() {
   const { user } = useContext(AuthContext);
@@ -77,7 +78,7 @@ function Messenger() {
           <div className="chatmenu mt-5">
             <div className="chatmenu-wrapper">
               <h4>Your conversations</h4>
-              {errorMessage && <p>{errorMessage}</p>}
+              {errorMessage && <ErrorCard errorMessage={errorMessage} />}
               <hr />
               {conversations.map((oneConvo) => {
                 return (

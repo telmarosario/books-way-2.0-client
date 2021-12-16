@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import genres from "../../genres";
 import fileService from "../../services/fileupload.service";
 import bookService from "../../services/book.service";
+import ErrorCard from "./../../components/ErrorCard/ErrorCard";
 
 function AddBook() {
   const [isOnSale, setIsOnSale] = useState(false);
@@ -157,7 +158,7 @@ function AddBook() {
           <div className="col-3"></div>
         </div>
       </div>
-      {errorMessage && <p className="error-message">{errorMessage}</p>}
+      {errorMessage && <ErrorCard errorMessage={errorMessage} />}
     </form>
   );
 }

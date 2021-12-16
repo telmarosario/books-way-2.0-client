@@ -5,6 +5,7 @@ import { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { AuthContext } from "./../../context/auth.context";
 import BookCard from "../../components/BookCard/BookCard";
+import ErrorCard from "./../../components/ErrorCard/ErrorCard";
 import "./OtherUser.css";
 
 function OtherUser() {
@@ -47,8 +48,7 @@ function OtherUser() {
 
   return (
     <div>
-      {errorMessage && <p>{errorMessage}</p>}
-
+      {errorMessage && <ErrorCard errorMessage={errorMessage} />}
       {otherUser && (
         <div className="container mt-5">
           <div className="row">

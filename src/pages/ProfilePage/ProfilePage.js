@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/auth.context";
 import userService from "../../services/user.service";
 import BookCard from "../../components/BookCard/BookCard";
+import ErrorCard from "./../../components/ErrorCard/ErrorCard";
 import { Link } from "react-router-dom";
 import "./ProfilePage.css";
 
@@ -28,8 +29,7 @@ function ProfilePage() {
 
   return (
     <div>
-      {errorMessage && <p>{errorMessage}</p>}
-
+      {errorMessage && <ErrorCard errorMessage={errorMessage} />}
       {userInfo && (
         <div className="container mt-5">
           <div className="row">

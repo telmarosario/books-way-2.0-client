@@ -5,6 +5,7 @@ import { AuthContext } from "./../../context/auth.context";
 import BookService from "../../services/book.service";
 import bookService from "../../services/book.service";
 import "./BookDetails.css";
+import ErrorCard from "./../../components/ErrorCard/ErrorCard";
 
 function BookDetails() {
   const { user } = useContext(AuthContext);
@@ -47,7 +48,7 @@ function BookDetails() {
 
   return (
     <div>
-      {errorMessage && <p>{errorMessage}</p>}
+      {errorMessage && <ErrorCard errorMessage={errorMessage} />}
       {book && (
         <div className="container mt-5">
           <div className="row">

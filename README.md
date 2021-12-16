@@ -1,12 +1,10 @@
 # README
 
-Status: In progress
-
 # BooksWay
 
 ## Description
 
-BooksWay is a web app to sell and trade books
+BooksWay is a web app to sell and trade books with a built in chat.
 
 ## User Stories
 
@@ -15,6 +13,7 @@ BooksWay is a web app to sell and trade books
 - **Signup:** As an anonymous user I can sign up for BooksWay to start selling or trading books.
 - **Login:** As a user, I can create an account with a username, password, contact information, favorite book genres, and a profile picture.
 - **Logout:** As a logged-in user I can log out from the application so no one else can use it.
+- **About Us** As an anonymous user or as an authenticated user, I can read more about BooksWay.
 - **Search:** As a logged-in user I can search books by title or I can select a genre from the drop-down menu that will bring up all the results that match by query.
 - **Profile page:** As a logged-in user I can visit my profile page and see the books I'm selling or trading. I can also edit my profile.
 - **Add book:** As a user, I can add a new book to the application. I can choose if the book is up for trade or for sale. I can set the price and add a picture.
@@ -26,30 +25,34 @@ BooksWay is a web app to sell and trade books
 
 ## Backlog
 
-- Built-in chat using socket.io
 - Dark theme
 
 # Client / Frontend
 
 ## React Router Routes
 
-| Path                   | Component       | Permissions                            | Behavior                                              |
-| ---------------------- | --------------- | -------------------------------------- | ----------------------------------------------------- |
-| `/login`               | LoginPage       | anonymous user only `<isAnon>`         | Login form navigates to the home page after login.    |
-| ` /signup`             | SignupPage      | anonymous user only `<isAnon>`         | Signup form navigates to the login page after signup. |
-| `/`                    | HomePage        | public                                 | Homepage                                              |
-| `/user-profile`        | ProfilePage     | authenticated user only `<IsPrivate> ` | User profile for the current user                     |
-| `/user-profile/edit`   | EditProfilePage | authenticated user only `<IsPrivate> ` | Edit user profile form.                               |
-| ` /user/:userId`       | OtherUser       | authenticated user only `<IsPrivate> ` | Other users' profiles.                                |
-| `/books/:bookId`       | BookDetails     | authenticated user only `<IsPrivate> ` | Book details for specific user                        |
-| ` /books/add-book`     | AddBook         | authenticated user only `<IsPrivate> ` | Form to create a new book                             |
-| ` /books/edit/:bookId` | EditBook        | authenticated user only `<IsPrivate> ` | Form to edit a new book                               |
-| `/user-profiles/saved` | SavedBooks      | authenticated user only `<IsPrivate>`  | Current user saved books                              |
+| Path                   | Component       | Permissions                            | Behavior                                                         |
+| ---------------------- | --------------- | -------------------------------------- | ---------------------------------------------------------------- |
+| `/login`               | LoginPage       | anonymous user only `<isAnon>`         | Login form navigates to the home page after login.               |
+| ` /signup`             | SignupPage      | anonymous user only `<isAnon>`         | Signup form navigates to the login page after signup.            |
+| `/`                    | HomePage        | public                                 | Homepage                                                         |
+| `/user-profile`        | ProfilePage     | authenticated user only `<IsPrivate> ` | User profile for the current user                                |
+| `/user-profile/edit`   | EditProfilePage | authenticated user only `<IsPrivate> ` | Edit user profile form.                                          |
+| ` /user/:userId`       | OtherUser       | authenticated user only `<IsPrivate> ` | Other users' profiles.                                           |
+| `/books/:bookId`       | BookDetails     | authenticated user only `<IsPrivate> ` | Book details for specific user                                   |
+| ` /books/add-book`     | AddBook         | authenticated user only `<IsPrivate> ` | Form to create a new book                                        |
+| ` /books/edit/:bookId` | EditBook        | authenticated user only `<IsPrivate> ` | Form to edit a new book                                          |
+| `/user-profiles/saved` | SavedBooks      | authenticated user only `<IsPrivate>`  | Current user saved books                                         |
+| `/chat`                | Messenger       | authenticated user only `<IsPrivate>`  | Chat to talk to other users. Stores all past conversations.      |
+| `/about`               | AboutUs         | Public                                 | About BooksWay app                                               |
+| `/`                    | HomePage        | Public                                 | Homepage with all the books avaliable in the app. Search options |
+| `*`                    | 404             | Public                                 | Custom 404 message                                               |
 
-## Components
+# Components
 
 **Pages:**
 
+- `AboutUs`
 - `LoginPage`
 - `SignupPage`
 - `HomePage`
@@ -60,11 +63,47 @@ BooksWay is a web app to sell and trade books
 - `AddBook`
 - `EditBook`
 - `SavedBooks`
+- `ErrorPage`
+- `Messenger`
 
 **Components:**
 
 - `IsAnon`
 - `IsPrivate`
+- `BookCard`
+- `Conversation`
+- `ErrorCard`
+- `Footer`
+- `Message`
+- `Navbar`
+- `SearchBar`
+- `SearchGenre`
+
+# Services
+
+- Auth Service
+  - `.login(user)`
+  - `.signup(user)`
+  - `.verify`
+- File Upload Service
+  - `.uploadImage(file)`
+- Book Service
+  - `.createBook(requestBody)`
+  - `.getAllBooks()`
+  - `.getOneBook(bookId)`
+  - `.editBook(bookId, requestBody)`
+  - `.deleteBook(bookId)`
+  - `.saveToFavorites(bookId)`
+- User Service
+  - `.currentUser`
+  - `.updateCurrentUser(requestBody)`
+  - `.getUserSavedBooks`
+  - `.getUsersProfile(userId)`
+- Chat Service
+  - `.createConversation(requestBody)`
+  - `.getAllConversations(userId)`
+  - `.createMessage(requestBody)`
+  - `.getMessagesFromConvo(conversationId)`
 
 # Server / Backend
 
@@ -98,30 +137,56 @@ const bookSchema = new Schema({
 });
 ```
 
+### Conversation Model
+
+```jsx
+const conversationSchema = new Schema(
+  {
+    members: { type: Array },
+  },
+  { timestamps: true }
+);
+```
+
+### Message Model
+
+```jsx
+const messageSchema = new Schema(
+  {
+    conversationId: { type: String },
+    sender: { type: String },
+    text: { type: String },
+  },
+  { timestamps: true }
+);
+```
+
 ## API Endpoints (backend routes)
 
-| HTTP Method | URL                       | Request body                                                  | Success status | Error status | Description                                                                                                                         |
-| ----------- | ------------------------- | ------------------------------------------------------------- | -------------- | ------------ | ----------------------------------------------------------------------------------------------------------------------------------- |
-| POST        | `/auth/signup`            | `{username, email, password, profilePicture, favoriteGenres}` | 201            | 400          | Checks if fields not empty and if the user already exists , then create user with encrypted password.                               |
-| POST        | `/auth/login`             | `{username, password}`                                        | 200            | 400          | Checks if fields are not empty; If the user exists and if the password matches. Then, attributes a authentication token to the user |
-| GET         | `/auth/verify`            |                                                               | 200            | 400          | Verifies if the user has a token and if it is authenticated. Then it sends back the payload with user data.                         |
-| GET         | `/api/books`              |                                                               | 200            | 200          | Get all the books                                                                                                                   |
-| GET         | `/api/books/:bookId`      |                                                               | 200            | 400          | Get a specific book                                                                                                                 |
-| POST        | `/api/books/:bookId`      |                                                               | 200            | 400          | Add specific book to favorites                                                                                                      |
-| POST        | `/api/books`              | {title,condition, tradeOrSale, price,genre, image }           | 201            | 400          | Create a new book                                                                                                                   |
-| PUT         | `/api/books/:bookId`      | {title,condition, tradeOrSale, price,genre, image }           | 200            | 400          | Edit a book                                                                                                                         |
-| DELETE      | `/api/books/:bookId `     |                                                               | 204            | 400          | Delete a book                                                                                                                       |
-| GET         | `/api/user/current `      |                                                               | 200            | 400          | Get current user's information                                                                                                      |
-| PUT         | `/api/user/current `      | {username, email, profilePicture, favoriteGenres }            | 200            | 400          | Update user's profile                                                                                                               |
-| GET         | `/api/user/current/saved` |                                                               | 200            | 400          | Get current user's saved books                                                                                                      |
-| GET         | `/api/user/:userId`       |                                                               | 200            | 400          | Get other users' profile                                                                                                            |
+| HTTP Method | URL                                 | Request body                                                  | Success status | Error status | Description                                                                                                                         |
+| ----------- | ----------------------------------- | ------------------------------------------------------------- | -------------- | ------------ | ----------------------------------------------------------------------------------------------------------------------------------- |
+| POST        | `/auth/signup`                      | `{username, email, password, profilePicture, favoriteGenres}` | 201            | 400          | Checks if fields not empty and if the user already exists , then create user with encrypted password.                               |
+| POST        | `/auth/login`                       | `{username, password}`                                        | 200            | 400          | Checks if fields are not empty; If the user exists and if the password matches. Then, attributes a authentication token to the user |
+| GET         | `/auth/verify`                      |                                                               | 200            | 400          | Verifies if the user has a token and if it is authenticated. Then it sends back the payload with user data.                         |
+| GET         | `/api/books`                        |                                                               | 200            | 200          | Get all the books                                                                                                                   |
+| GET         | `/api/books/:bookId`                |                                                               | 200            | 400          | Get a specific book                                                                                                                 |
+| POST        | `/api/books/:bookId`                |                                                               | 200            | 400          | Add specific book to favorites                                                                                                      |
+| POST        | `/api/books`                        | {title,condition, tradeOrSale, price,genre, image }           | 201            | 400          | Create a new book                                                                                                                   |
+| PUT         | `/api/books/:bookId`                | {title,condition, tradeOrSale, price,genre, image }           | 200            | 400          | Edit a book                                                                                                                         |
+| DELETE      | `/api/books/:bookId `               |                                                               | 204            | 400          | Delete a book                                                                                                                       |
+| GET         | `/api/user/current `                |                                                               | 200            | 400          | Get current user's information                                                                                                      |
+| PUT         | `/api/user/current `                | {username, email, profilePicture, favoriteGenres }            | 200            | 400          | Update user's profile                                                                                                               |
+| GET         | `/api/user/current/saved`           |                                                               | 200            | 400          | Get current user's saved books                                                                                                      |
+| GET         | `/api/user/:userId`                 |                                                               | 200            | 400          | Get other users' profile                                                                                                            |
+| POST        | `/api/chat/conversation`            | {senderId, reciverId}                                         | 200            | 400          | Create new conversation                                                                                                             |
+| GET         | `/api/chat/conversation/:userId`    |                                                               | 200            | 400          | Get a conversation of a user                                                                                                        |
+| GET         | `/api/chat/message/:conversationId` |                                                               | 200            | 400          | Get all messages inside a conversation                                                                                              |
+| POST        | `/api/chat/message`                 | {senderId,conversationId, text}                               | 200            | 400          | Create a new message                                                                                                                |
 
 ## Links
 
-### Git
+[Client repository Link](https://github.com/telmarosario/books-way-2.0-client)
 
-[Client repository Link](https://github.com/telmarosario/books-way-client)
+[Server repository Link](https://github.com/telmarosario/books-way-2.0-server)
 
-[Server repository Link](https://github.com/telmarosario/books-way-server)
-
-Deployed Link
+[Deployed Link](https://booksway2.netlify.app/)

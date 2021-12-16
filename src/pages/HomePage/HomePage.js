@@ -4,6 +4,7 @@ import bookService from "../../services/book.service";
 import SearchBar from "../../components/SearchBar/SearchBar";
 import SearchGenre from "../../components/SearchGenre/SearchGenre";
 import BookCard from "../../components/BookCard/BookCard";
+import ErrorCard from "../../components/ErrorCard/ErrorCard";
 import "./HomePage.css";
 
 function HomePage() {
@@ -16,7 +17,6 @@ function HomePage() {
       const response = await bookService.getAllBooks();
       setBooks(response.data);
       setAllBooks(response.data);
-      console.log(allBooks);
     } catch (error) {
       setErrorMessage(error.response.data.message);
     }
@@ -50,7 +50,7 @@ function HomePage() {
     <div className="container">
       <div className="row">
         <div class="col-sm-10 col-md-12">
-          {errorMessage && <p>{errorMessage}</p>}
+          {errorMessage && <ErrorCard errorMessage={errorMessage} />}
 
           <div className="d-flex justify-content-center mt-5 mb-5">
             <SearchBar searchFilter={searchFilter} />

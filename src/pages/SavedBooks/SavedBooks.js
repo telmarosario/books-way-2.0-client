@@ -9,7 +9,6 @@ function SavedBooks() {
   const fetchData = async () => {
     const response = await userService.getUserSavedBooks();
     setUserInfo(response.data);
-    console.log(userInfo);
   };
 
   useEffect(() => {

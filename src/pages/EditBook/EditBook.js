@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import genres from "../../genres";
 import fileService from "../../services/fileupload.service";
 import bookService from "../../services/book.service";
+import ErrorCard from "../../components/ErrorCard/ErrorCard";
 
 function EditBook() {
   const [isOnSale, setIsOnSale] = useState(false);
@@ -169,7 +170,7 @@ function EditBook() {
             <div className="col-3"></div>
           </div>
         </div>
-        {errorMessage && <p className="error-message">{errorMessage}</p>}
+        {errorMessage && <ErrorCard errorMessage={errorMessage} />}
       </form>
     </div>
   );
